@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>無障礙廁所查詢系統</title>
+  <style>
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    .result {
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      border: 1px solid #ddd;
+    }
+    .map-container {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .map-container img {
+      max-width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>無障礙廁所查詢系統</h1>
+    <input type="text" id="buildingInput" placeholder="請輸入建築物名稱，如：湖濱館" oninput="searchBuilding()"/>
+    <div class="result" id="result"></div>
+    <div class="map-container">
+      <h2>校園無障礙設施平面圖</h2>
+      <img src="https://www.ncue.edu.tw/var/file/0/1000/img/19/877053240.jpg" alt="無障礙設施平面圖">
+    </div>
+  </div>
+
+  <script>
+    const buildingData = {
+      "湖濱館": "設有無障礙坡道、無障礙廁所位於2樓、電梯連通B1至4樓",
+      "至善館": "設有無障礙坡道、無障礙廁所位於1至4樓、電梯連通B1至4樓、無障礙停車位1處",
+      "綜合中心": "設有無障礙坡道、無障礙廁所位於2樓、電梯連通B1至4樓、無障礙停車位1處",
+      "明德館": "設有無障礙坡道、無障礙廁所位於1、2、4樓、電梯連通B1至4樓、無障礙停車位4處",
+      "巧思館": "設有無障礙坡道、無障礙廁所位於1至4樓、電梯連通1至4樓、無障礙停車位1處",
+      "格致館": "設有無障礙坡道、無障礙廁所位於1樓、電梯連通1至5樓、無障礙停車位1處",
+      "白沙大樓": "設有無障礙坡道、無障礙廁所位於西側1、3、4樓、電梯連通B1至5樓、無障礙停車位2處",
+      "教學大樓": "設有無障礙坡道、無障礙廁所位於B1至6樓、電梯連通B1至6樓、無障礙停車位1處",
+      "博學樓": "設有無障礙坡道、無障礙廁所位於B1至6樓、電梯連通B1至6樓、無障礙停車位1處",
+      "T大": "設有無障礙坡道、無障礙廁所位於B1至6樓、電梯連通B1至6樓、無障礙停車位1處",
+      "擷英館": "建物地勢平坦，可直通室內，無障礙廁所位於1樓、電梯連通1至2樓、無障礙停車位1處",
+      "學生活動中心": "設有無障礙坡道、無障礙廁所位於1樓、電梯連通B1至4樓",
+      "王金平活動中心": "建物地勢平坦，可直通室內，無障礙廁所位於1至5樓、電梯連通1至5樓",
+      "體育館": "設有無障礙坡道、無障礙廁所位於B1及1樓、電梯連通B1至2樓",
+      "王金平游泳館": "建物地勢平坦，可直通室內，無障礙廁所位於1樓、電梯連通1至2樓",
+      "圖資大樓": "設有無障礙坡道、無障礙廁所位於1及5樓、可請館員協助搭電梯可通B1到5樓、無障礙停車位1處",
+      "聲洋館": "設有無障礙坡道、無障礙廁所位於1樓、電梯連通1至4樓、無障礙停車位1處",
+      "藝薈館": "設有無障礙坡道、無障礙廁所位於1樓",
+      "弘道館": "設有無障礙坡道、無障礙廁所位於1樓、電梯連通1至4樓、無障礙停車位1處",
+      "學思樓": "建物地勢平坦，可直通室內，無障礙廁所位於1樓、電梯連通1至4樓、無障礙停車位1處",
+      "學生餐廳": "設有無障礙坡道、無障礙廁所位於1樓",
+      "宿舍區": "設有無障礙坡道、無障礙廁所位於1樓"
+    };
+
+    function searchBuilding() {
+      const input = document.getElementById("buildingInput").value.trim();
+      const result = document.getElementById("result");
+
+      if (input === "") {
+        result.innerHTML = "";
+        return;
+      }
+
+      let found = false;
+      for (const key in buildingData) {
+        if (key.includes(input)) {
+          result.innerHTML = `<strong>${key}</strong><br>${buildingData[key]}`;
+          found = true;
+          break;
+        }
+      }
+
+      if (!found) {
+        result.innerHTML = "查無資料，請確認輸入是否正確。";
+      }
+    }
+  </script>
+</body>
+</html>
